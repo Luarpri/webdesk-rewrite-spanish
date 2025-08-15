@@ -53,11 +53,11 @@ var UI = {
             if (result && result.responseMessage) {
                 return result.responseMessage;
             } else {
-                throw new Error("<!> No response from LLM");
+                throw new Error("<!> Sin respuesta");
             }
         } catch (error) {
-            console.error("<!> Error sending to LLM:", error);
-            throw new Error("Error sending to LLM");
+            console.error("<!> Error al enviar el mensaje:", error);
+            throw new Error("Error al enviar el mensaje");
         }
     },
     text: function (parent, text, classname) {
@@ -136,7 +136,7 @@ var UI = {
             const img = this.create('img', parent, classname);
             img.src = URL.createObjectURL(blob);
         } else {
-            console.log(`<!> ` + path + ` is not an image decodable by WebDesk's UI.`);
+            console.log(`<!> ` + path + ` no es una imagen decodificable por la interfaz de usuario de WebDesk.`);
         }
     },
     changevar: function (varname, value) {
@@ -252,4 +252,5 @@ var UI = {
             }
         }
     }
+
 }
