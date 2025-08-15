@@ -82,7 +82,7 @@ export async function launch(UI, fs, Scripts) {
         });
 
         messages.push({
-            content: "Hello! Introduce yourself. Keep your response short (under 20 words.)",
+            content: "Hola! Introducete a ti mismo, manten la respuesta corta (20 palabras)",
             role: "user"
         })
 
@@ -102,11 +102,11 @@ export async function launch(UI, fs, Scripts) {
 
         if (sys.LLMLoaded !== true) {
             if (sys.LLMLoaded === false) {
-                UI.text(messagebox, "Chloe's deactivated.");
-                UI.text(messagebox, "Would you like to reactivate her?");
+                UI.text(messagebox, "Chloe ha sido desactivada");
+                UI.text(messagebox, "Te gustaria reactivarla?");
                 const button = UI.button(messagebox, 'Reactivate', 'ui-main-btn');
                 button.addEventListener('click', async function () {
-                    messagebox.innerHTML = "<p>You reactivated Chloe.</p><p>Loading...</p>";
+                    messagebox.innerHTML = "<p>Has reactivado a Chloe.</p><p>Loading...</p>";
                     set.del('chloe');
                     const ai = await fs.read('/system/llm/startup.js');
                     let model = set.read('LLMModel');
@@ -126,11 +126,11 @@ export async function launch(UI, fs, Scripts) {
                     });
                 });
             } else {
-                UI.text(messagebox, "Chloe's loading...");
-                UI.text(messagebox, "She'll be with you in a second.");
+                UI.text(messagebox, "Chloe esta cargando...");
+                UI.text(messagebox, "Estara contigo en un momento");
             }
 
-            const closeBtn = UI.button(messagebox, 'Close', 'ui-main-btn');
+            const closeBtn = UI.button(messagebox, 'Cerrar', 'ui-main-btn');
             closeBtn.addEventListener('click', async function () {
                 closeCurrentMenu();
             });
@@ -184,20 +184,20 @@ export async function launch(UI, fs, Scripts) {
                         img.style.maxWidth = "200px";
                         document.body.appendChild(img);
                     } else {
-                        console.log(`Text file contents of ${file.name}:`, blob);
+                        console.log(`Contenido del archivo: ${file.name}:`, blob);
                     }
                 } catch (err) {
-                    console.error(`Failed to process ${file.name}:`, err);
+                    console.error(`Error al procesar ${file.name}:`, err);
                 }
             }
         });
 
-        const uploadBtn = UI.button(menu, 'Upload File', 'ui-main-btn wide');
+        const uploadBtn = UI.button(menu, 'Subir archivo', 'ui-main-btn wide');
         uploadBtn.addEventListener('click', () => {
             input.click();
         });
 
-        const softBtn = UI.button(menu, 'Reboot without re-initializing', 'ui-main-btn wide');
+        const softBtn = UI.button(menu, 'Reiniciar sin reinicializar', 'ui-main-btn wide');
         softBtn.addEventListener('click', () => {
             document.body.innerHTML = '';
             Scripts.loadJS('/system/init.js');
@@ -242,7 +242,8 @@ export async function launch(UI, fs, Scripts) {
         const imageUrl = URL.createObjectURL(blob);
         document.body.style.backgroundImage = `url('${imageUrl}')`;
     } else {
-        console.log(`<!> /system/lib/wallpaper.jpg is not an image decodable by WebDesk's UI.`);
+        console.log(`<!> /system/lib/wallpaper.jpg no es una imagen decodificable por la interfaz de usuario de WebDesk.`);
     }
     return ring;
+
 }
