@@ -1,4 +1,4 @@
-console.log(`<i> WebDesk File System ready! Read the docs at the top of fs.js if you need help`);
+console.log(`<i> ¡El sistema de archivos de WebDesk está listo! Si necesitas ayuda, consulta la documentación en la parte superior de fs.js.);
 var tmp = new Map();
 
 // Written (almost ENTIRELY) with ChatGPT! (fs.js, not so much, that's my own design)
@@ -115,7 +115,7 @@ const fs = {
                         found = true;
                     }
                 }
-                if (!found) throw new Error("Nothing found to delete");
+                if (!found) throw new Error("No hay nada a eliminar");
                 self.postMessage({ optype: "erase", uID: uid, data: true });
                 return;
             }
@@ -184,5 +184,6 @@ onmessage = (e) => {
     if (optype === "ls") fs.ls(data, uID);
     if (optype === "rm") fs.del(data, uID);
 };
+
 
 self.postMessage({ optype: "ready" });
