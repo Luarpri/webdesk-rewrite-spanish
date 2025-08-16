@@ -94,12 +94,12 @@
             }
         });
 
-        const uploadBtn = UI.button(menu, 'Upload File', 'ui-main-btn wide');
+        const uploadBtn = UI.button(menu, 'Subir archivo', 'ui-main-btn wide');
         uploadBtn.addEventListener('click', () => {
             input.click();
         });
 
-        const softBtn = UI.button(menu, 'Reboot without re-initializing', 'ui-main-btn wide');
+        const softBtn = UI.button(menu, 'Reiniciar sin reinicializar', 'ui-main-btn wide');
         softBtn.addEventListener('click', () => {
             document.body.innerHTML = '';
             Scripts.loadJS('/system/init.js');
