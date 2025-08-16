@@ -2,11 +2,11 @@ export async function launch(UI, fs, Scripts) {
     const taskbar = UI.create('div', document.body, 'taskbar');
     const left = UI.create('div', taskbar, 'window-header-nav');
     const right = UI.create('div', taskbar, 'window-header-text');
-    const appBTN = UI.button(left, 'Apps', 'ui-main-btn');
+    const appBTN = UI.button(left, 'Inicio', 'ui-main-btn');
     const llmBTN = UI.button(left, '', 'ring-btn');
     const contLLM = UI.create('div', llmBTN, 'waiting');
     const ring = UI.create('div', contLLM, 'ring');
-    const contBTN = UI.button(right, 'Controls', 'ui-main-btn');
+    const contBTN = UI.button(right, 'Controles', 'ui-main-btn');
     if (sys.LLMLoaded === "unsupported") {
         llmBTN.style.display = "none";
     }
@@ -137,7 +137,7 @@ export async function launch(UI, fs, Scripts) {
         } else {
             const layout = UI.leftRightLayout(menu);
             const input = UI.create('input', layout.left, 'ui-main-input wide');
-            input.placeholder = "Ask Chloe anything...";
+            input.placeholder = "Dile a Chole lo que sea...";
             const btn = UI.button(layout.right, 'Send', 'ui-med-btn');
 
             btn.addEventListener('click', async function () {
