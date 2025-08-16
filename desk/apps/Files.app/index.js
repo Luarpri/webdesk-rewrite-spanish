@@ -94,7 +94,7 @@ export async function launch(UI, fs, Scripts) {
                             img.style = "max-width: 100%";
                             win.content.appendChild(img);
                         }).catch(err => {
-                            console.error(`Failed to read ${file.name}:`, err);
+                            console.error(`Error al abrir ${file.name}:`, err);
                         });
                     } else {
                         const code = await fs.read('/apps/TextEdit.app/index.js');
@@ -115,7 +115,7 @@ export async function launch(UI, fs, Scripts) {
                     event.preventDefault();
                     const contextMenu = UI.rightClickMenu(event);
 
-                    const openButton = UI.button(contextMenu, 'Open', 'ui-small-btn wide');
+                    const openButton = UI.button(contextMenu, 'Abrir', 'ui-small-btn wide');
                     openButton.onclick = async () => {
                         if (file.kind === "directory") {
                             await nav(file.path);
@@ -125,7 +125,7 @@ export async function launch(UI, fs, Scripts) {
                         contextMenu.remove();
                     };
 
-                    const deleteButton = UI.button(contextMenu, 'Delete', 'ui-small-btn wide');
+                    const deleteButton = UI.button(contextMenu, 'Borrar', 'ui-small-btn wide');
                     deleteButton.onclick = async () => {
                         await fs.rm(file.path);
                         nav(currentPath);
@@ -191,8 +191,8 @@ export async function pickFile(UI, fs, Scripts) {
         sidebarcontent.style.overflow = "auto";
 
         win.header.innerHTML = "";
-        UI.create('span', win.header, 'smalltxt').textContent = "Select a file";
-        const cancelButton = UI.button(win.header, 'Cancel', 'ui-small-btn wide');
+        UI.create('span', win.header, 'smalltxt').textContent = "Selecciona un archivo";
+        const cancelButton = UI.button(win.header, 'Cancelar', 'ui-small-btn wide');
         cancelButton.onclick = () => {
             win.buttons.closeBtn.click();
             resolve(null);
