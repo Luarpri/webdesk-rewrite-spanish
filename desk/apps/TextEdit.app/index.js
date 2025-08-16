@@ -7,7 +7,7 @@ export async function launch(UI, fs, Scripts, defaultlaunch) {
 
         const p = UI.text(debugwin.content, 'TextEdit');
         const textbox = UI.create("textarea", debugwin.content);
-        textbox.placeholder = "Write here...";
+        textbox.placeholder = "Escribe aqui...";
         textbox.style.width = "100%";
         textbox.style.height = "400px";
 
@@ -26,7 +26,7 @@ export async function launch(UI, fs, Scripts, defaultlaunch) {
         textbox.value = bootcode;
 
         if (textbox.value === "[object File]") {
-            p.innerText = "This file is not a text file. It's meant to be opened with something else.";
+            p.innerText = "Este archivo no es un archivo de texto, abrelo con su aplicacion correspondiente";
         }
 
         debugwin.updateWindow();
