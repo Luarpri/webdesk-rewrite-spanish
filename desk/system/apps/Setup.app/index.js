@@ -12,35 +12,35 @@ export async function launch(UI, fs, Scripts) {
     UI.text(setup, "Welcome to WebDesk!");
     const alrSetup = await set.read('setupdone');
     if (alrSetup === "true") {
-        const btn = UI.button(setup, "Exit", "ui-main-btn");
+        const btn = UI.button(setup, "Salir", "ui-main-btn");
         btn.addEventListener('click', () => {
             UI.remove(setupflexcontainer);
         });
     }
 
-    const btn = UI.button(setup, "Next", "ui-main-btn");
+    const btn = UI.button(setup, "Siguiente", "ui-main-btn");
     btn.addEventListener('click', () => {
         migratePane();
     });
 
     async function migratePane() {
         setup.innerHTML = '';
-        UI.text(setup, "Migration Assistant");
+        UI.text(setup, "Asistente de migracion");
         const existing = await fs.read('/user/info/config.json');
         if (existing) {
-            const status = UI.text(setup, "Copy data from old WebDesk to new WebDesk? This might take a while, files need to be converted.");
-            const skipBtn = UI.button(setup, "Skip", "ui-main-btn");
+            const status = UI.text(setup, "¿Copiar datos del WebDesk antiguo al nuevo? Esto puede tardar un poco; es necesario convertir los archivos.");
+            const skipBtn = UI.button(setup, "Saltar", "ui-main-btn");
             skipBtn.addEventListener('click', () => {
                 aiSetupPane();
             });
-            const migrateBtn = UI.button(setup, "Migrate", "ui-main-btn");
+            const migrateBtn = UI.button(setup, "Migrar", "ui-main-btn");
             migrateBtn.addEventListener('click', async () => {
                 const oldfs = document.createElement('script');
                 oldfs.src = './oldfs.js';
                 document.body.appendChild(oldfs);
                 oldfs.onload = async () => {
                     setTimeout(async () => {
-                        status.innerText = "Getting file paths...";
+                        status.innerText = "Obteniendo rutas de archivos...";
                         const all = await fs2.getall();
                         let counter = 0;
                         all.forEach(async (file) => {
@@ -78,16 +78,16 @@ export async function launch(UI, fs, Scripts) {
         const changeTxt2 = UI.text(setup, "");
         changeTxt2.style.marginBottom = '10px';
         const changeTxt = UI.create('span', changeTxt2);
-        changeTxt.innerText = "Create a WebDesk account ";
+        changeTxt.innerText = "Hacer una cuenta WebDesk ";
         const switchBtn = UI.button(changeTxt2, "Login instead", "ui-small-btn");
         const username = UI.input(setup, "Username", "ui-main-input wide", "text");
         const password = UI.input(setup, "Password", "ui-main-input wide", "password");
         const loginBtn = UI.button(setup, "Create account", "ui-main-btn");
 
         function switchToLogin() {
-            changeTxt.innerText = "Sign into your WebDesk account ";
-            switchBtn.Filler.innerText = "Create account instead";
-            loginBtn.Filler.innerText = "Sign in instead";
+            changeTxt.innerText = "Iniciar sesion ";
+            switchBtn.Filler.innerText = "Crear cuenta";
+            loginBtn.Filler.innerText = "Iniciar sesion";
             switchBtn.removeEventListener('click', switchToLogin);
             switchBtn.addEventListener('click', switchToCreation);
             loginBtn.removeEventListener('click', createAccount);
@@ -95,9 +95,9 @@ export async function launch(UI, fs, Scripts) {
         }
 
         function switchToCreation() {
-            changeTxt.innerText = "Create a WebDesk account ";
-            switchBtn.Filler.innerText = "Login instead";
-            loginBtn.Filler.innerText = "Create account";
+            changeTxt.innerText = "Hacer una cuenta WebDesk ";
+            switchBtn.Filler.innerText = "Iniciar sesion";
+            loginBtn.Filler.innerText = "Crear cuenta";
             switchBtn.removeEventListener('click', switchToCreation);
             switchBtn.addEventListener('click', switchToLogin);
             loginBtn.removeEventListener('click', loginToAccount);
@@ -108,7 +108,7 @@ export async function launch(UI, fs, Scripts) {
             if (username && password) {
                 sys.socket.emit("signin", { user: username.value, pass: password.value });
             } else {
-                wm.snack("Please enter both username and password.");
+                wm.snack("Por favor introduce nombre y usuario");
             }
         }
 
@@ -116,20 +116,20 @@ export async function launch(UI, fs, Scripts) {
             if (username && password) {
                 sys.socket.emit("newacc", { user: username.value, pass: password.value });
             } else {
-                wm.snack("Enter both username and password.");
+                wm.snack("Introduce nombre y usuario");
             }
         }
 
         sys.socket.on("logininstead", () => {
             const menu = UI.create('div', setup, 'cm');
-            UI.text(menu, "You already have an account! Log in as " + username.value + "?");
+            UI.text(menu, "¡Ya tienes una cuenta! ¿Iniciar sesion como: " + username.value + "?");
 
-            const noBtn = UI.button(menu, "Close", "ui-main-btn");
+            const noBtn = UI.button(menu, "Cerrar", "ui-main-btn");
             noBtn.addEventListener('click', () => {
                 UI.remove(menu);
             });
 
-            const yesBtn = UI.button(menu, "Log in", "ui-main-btn");
+            const yesBtn = UI.button(menu, "Iniciar sesion", "ui-main-btn");
             yesBtn.addEventListener('click', () => {
                 sys.socket.emit("signin", { user: username.value, pass: password.value });
                 UI.remove(menu);
@@ -148,7 +148,7 @@ export async function launch(UI, fs, Scripts) {
     async function llmStatus() {
         setup.innerHTML = '';
         UI.text(setup, "Assistant");
-        UI.text(setup, `WebDesk now includes an assistant called Chloe! It can summarize documents, notifications, write basic essays, etc. It has a status light in the taskbar that you can check:`);
+        UI.text(setup, `¡WebDesk ahora incluye una asistente llamada Chloe! Puede resumir documentos, notificaciones, escribir ensayos básicos, etc. Tiene una luz de estado en la barra de tareas que puedes consultar:`);
 
         const setupR = UI.create('div', setup, 'box-group')
 
@@ -157,7 +157,7 @@ export async function launch(UI, fs, Scripts) {
         normalOpRing.style.setProperty('--color-start', '#08f');
         normalOpRing.style.setProperty('--color-end', '#00f');
         normalOpRing.style.setProperty('--speed', '4s');
-        normalOpBar.right.innerText = "Waiting for commands";
+        normalOpBar.right.innerText = "Esperando comandos...";
 
         UI.line(setupR);
 
@@ -166,7 +166,7 @@ export async function launch(UI, fs, Scripts) {
         workingOpRing.style.setProperty('--color-start', '#fe0');
         workingOpRing.style.setProperty('--color-end', '#fb0');
         workingOpRing.style.setProperty('--speed', '2.5s');
-        workingOpBar.right.innerText = "Thinking/Generating";
+        workingOpBar.right.innerText = "Pensando/Generando";
 
         UI.line(setupR);
 
@@ -175,7 +175,7 @@ export async function launch(UI, fs, Scripts) {
         startRing.style.setProperty('--color-start', '#c9f');
         startRing.style.setProperty('--color-end', '#88f');
         startRing.style.setProperty('--speed', '1s');
-        startBar.right.innerText = "Starting up/Loading";
+        startBar.right.innerText = "Iniciando/Cargando";
 
         UI.line(setupR);
 
@@ -184,7 +184,7 @@ export async function launch(UI, fs, Scripts) {
         disabledRing.style.setProperty('--color-start', '#999');
         disabledRing.style.setProperty('--color-end', '#999');
         disabledRing.style.setProperty('--speed', '2.5s');
-        disabledBar.right.innerText = "Deactivated/Off";
+        disabledBar.right.innerText = "Desactivado/Apagado";
 
         UI.line(setupR);
 
@@ -201,10 +201,10 @@ export async function launch(UI, fs, Scripts) {
                 errorRing.style.setProperty('--color-end', 'rgba(0, 0, 0, 0)');
             }, 300);
         }, 600);
-        errorBar.right.innerText = "Error/Problem";
+        errorBar.right.innerText = "Error/Problema";
 
         const doneBtn = UI.button(setup, "Got it", "ui-main-btn");
-        const deactivateAIBtn = UI.button(setup, "Deactivate AI features", "ui-main-btn");
+        const deactivateAIBtn = UI.button(setup, "Desactivar caracteristicas de IA", "ui-main-btn");
         doneBtn.addEventListener('click', () => {
             set.write('setupdone', 'true');
             window.location.reload();
@@ -213,16 +213,16 @@ export async function launch(UI, fs, Scripts) {
         function deactivateAI() {
             set.write('setupdone', 'true');
             set.write('chloe', 'deactivated');
-            UI.snack('AI features deactivated. You can reactivate them in Settings > Manage AI.');
-            deactivateAIBtn.Filler.innerText = "Reactivate AI features";
+            UI.snack('Funciones de IA desactivadas. Puedes reactivarlas en Ajustes > Administrar IA.');
+            deactivateAIBtn.Filler.innerText = "Reactivar funciones de IA";
             deactivateAIBtn.removeEventListener('click', deactivateAI);
             deactivateAIBtn.addEventListener('click', reactivateAI);
         }
 
         function reactivateAI() {
             set.del('chloe');
-            UI.snack('AI features reactivated. You can deactivate them in Settings > Manage AI.');
-            deactivateAIBtn.Filler.innerText = "Deactivate AI features";
+            UI.snack('Funciones de IA reactivadas. Puedes desactivarlas en Ajustes > Administrar IA.');
+            deactivateAIBtn.Filler.innerText = "Desactivar funciones de IA";
             deactivateAIBtn.removeEventListener('click', reactivateAI);
             deactivateAIBtn.addEventListener('click', deactivateAI);
         }
